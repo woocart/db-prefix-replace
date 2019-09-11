@@ -1,0 +1,19 @@
+{
+    "name": "woocart/wp-cli-dbtools",
+    "description": "Replace database prefix in tables and options.",
+    "type": "wp-cli-package",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+
+    },
+    "autoload": {
+        "files": [ "command.php" ]
+    },
+    "extra": {
+        "commands": [
+            "db prefix-replace",
+            "db to-innodb"
+        ]
+    }
+}
