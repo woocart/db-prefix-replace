@@ -3,13 +3,13 @@
 ## Using
 
 ~~~
-wp db prefix-replace new_prefix [--verbose]
+wp woocart prefix-replace new_prefix [--verbose]
 ~~~
 
 Replaces table names with new_prefix ones and updates **options** and **usermeta** tables.
 
 ~~~
-wp db to-innodb [--verbose]
+wp woocart to-innodb [--verbose]
 ~~~
 
 Replaces table engine to **InnoDB**.
