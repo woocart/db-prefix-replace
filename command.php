@@ -158,3 +158,119 @@ $run_innodb_command = function ($args, $assoc_args) {
 };
 
 \WP_CLI::add_command('woocart to-innodb', $run_innodb_command);
+
+/**
+  * Add a plugin to denylist.
+  *
+  * ## EXAMPLES
+  *
+  *     woocart denylist my_plugin
+  *
+  * @param $args array list of command line arguments.
+  * @param $assoc_args array of named command line keys.
+  */
+$run_denylist_command = function( $args, $assoc_args ) {
+  global $wpdb;
+
+  list( $plugin ) = $args;
+
+  // Fetch current denylist from the options table
+  $query = $wpdb->get_row( "SELECT option_value FROM `{$wpdb->prefix}options` WHERE option_name = 'woocart_denylist_plugins';" );
+
+  if ( ! $query ) {
+    $denylist = [];
+  } else {
+    $denylist = maybe_unserialize( $query->option_value );
+  }
+
+  // Add plugin to the list
+  if ( is_array( $denylist ) ) {
+    if ( ! empty( $plugin ) ) {
+      if ( ! in_array( $plugin, $denylist ) ) {
+        $denylist[] = $plugin;
+
+        // Serialize array
+        $serialized_denylist = maybe_serialize( $denylist );
+
+        // Update database
+        $update_query = $wpdb->prepare(
+          "UPDATE `{$wpdb->prefix}options` SET option_value=%s WHERE option_name='woocart_denylist_plugins';",
+          $serialized_denylist
+        );
+
+        // Execute query
+        if ( $wpdb->query( $update_query ) ) {
+          WP_CLI::success( sprintf( '%s plugin added to the denylist.', $plugin ) );
+        } else {
+          WP_CLI::error( 'There was an error updating the database - ' . $wpdb->last_error );
+        }
+      } else {
+        WP_CLI::log( 'Plugin already exists in the denylist.' );
+      }
+    } else {
+      WP_CLI::error( 'No plugin specified.' );
+    }
+  } else {
+    WP_CLI::error( 'There is a problem with the denylist option value in the database.' );
+  }
+};
+
+\WP_CLI::add_command( 'woocart denylist', $run_denylist_command );
+
+/**
+  * Add a plugin to allowlist.
+  *
+  * ## EXAMPLES
+  *
+  *     woocart allowlist my_plugin
+  *
+  * @param $args array list of command line arguments.
+  * @param $assoc_args array of named command line keys.
+  */
+$run_allowlist_command = function( $args, $assoc_args ) {
+  global $wpdb;
+
+  list( $plugin ) = $args;
+
+  // Fetch current allowlist from the options table
+  $query = $wpdb->get_row( "SELECT option_value FROM `{$wpdb->prefix}options` WHERE option_name = 'woocart_allowlist_plugins';" );
+
+  if ( ! $query ) {
+    $allowlist = [];
+  } else {
+    $allowlist = maybe_unserialize( $query->option_value );
+  }
+
+  // Add plugin to the list
+  if ( is_array( $allowlist ) ) {
+    if ( ! empty( $plugin ) ) {
+      if ( ! in_array( $plugin, $allowlist ) ) {
+        $allowlist[] = $plugin;
+
+        // Serialize array
+        $serialized_allowlist = maybe_serialize( $allowlist );
+
+        // Update database
+        $update_query = $wpdb->prepare(
+          "UPDATE `{$wpdb->prefix}options` SET option_value=%s WHERE option_name='woocart_allowlist_plugins';",
+          $serialized_allowlist
+        );
+
+        // Execute query
+        if ( $wpdb->query( $update_query ) ) {
+          WP_CLI::success( sprintf( '%s plugin added to the allowlist.', $plugin ) );
+        } else {
+          WP_CLI::error( 'There was an error updating the database - ' . $wpdb->last_error );
+        }
+      } else {
+        WP_CLI::log( 'Plugin already exists in the allowlist.' );
+      }
+    } else {
+      WP_CLI::error( 'No plugin specified.' );
+    }
+  } else {
+    WP_CLI::error( 'There is a problem with the allowlist option value in the database.' );
+  }
+};
+
+\WP_CLI::add_command( 'woocart allowlist', $run_allowlist_command );
