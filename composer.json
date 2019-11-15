@@ -12,8 +12,8 @@
     },
     "extra": {
         "commands": [
-            "db prefix-replace",
-            "db to-innodb"
+            "woocart prefix-replace",
+            "woocart to-innodb"
         ]
     }
 }
