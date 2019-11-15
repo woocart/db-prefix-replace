@@ -158,3 +158,69 @@ $run_innodb_command = function ($args, $assoc_args) {
 };
 
 \WP_CLI::add_command('woocart to-innodb', $run_innodb_command);
+
+/**
+  * Add a plugin to denylist.
+  *
+  * ## EXAMPLES
+  *
+  *     woocart denylist my_plugin
+  *
+  * @param $args array list of command line arguments.
+  * @param $assoc_args array of named command line keys.
+  */
+$run_denylist_command = function( $args, $assoc_args ) {
+    list( $plugin ) = $args;
+
+    // Fetch current denylist from the options table
+    $denylist = get_option( 'woocart_denylist_plugins', [] );
+
+    // Add plugin to the list
+    if ( ! empty( $plugin ) ) {
+        if ( ! in_array( $plugin, $denylist ) ) {
+            $denylist[] = $plugin;
+
+            update_option( 'woocart_denylist_plugins', $denylist );
+            WP_CLI::success( sprintf( '%s plugin added to the denylist.', $plugin ) );
+        } else {
+            WP_CLI::log( 'Plugin already exists in the denylist.' );
+        }
+    } else {
+        WP_CLI::error( 'No plugin specified.' );
+    }
+};
+
+\WP_CLI::add_command( 'woocart denylist', $run_denylist_command );
+
+/**
+  * Add a plugin to allowlist.
+  *
+  * ## EXAMPLES
+  *
+  *     woocart allowlist my_plugin
+  *
+  * @param $args array list of command line arguments.
+  * @param $assoc_args array of named command line keys.
+  */
+$run_allowlist_command = function( $args, $assoc_args ) {
+    list( $plugin ) = $args;
+
+    // Fetch current allowlist from the options table
+    $allowlist = get_option( 'woocart_allowlist_plugins', [] );
+
+    // Add plugin to the list
+    if ( ! empty( $plugin ) ) {
+        if ( ! in_array( $plugin, $allowlist ) ) {
+            $allowlist[] = $plugin;
+
+            update_option( 'woocart_allowlist_plugins', $allowlist );
+            WP_CLI::success( sprintf( '%s plugin added to the allowlist.', $plugin ) );
+        } else {
+            WP_CLI::log( 'Plugin already exists in the allowlist.' );
+        }
+    } else {
+        WP_CLI::error( 'No plugin specified.' );
+    }
+};
+
+\WP_CLI::add_command( 'woocart allowlist', $run_allowlist_command );
