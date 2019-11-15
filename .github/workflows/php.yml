@@ -16,5 +16,5 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
       
-    - name: PHP Insights Action
-      uses: stefanzweifel/phpinsights-action@v1.0.0
+    - name: PHP Syntax Checker (Lint)
+      uses: StephaneBour/actions-php-lint@7.2
