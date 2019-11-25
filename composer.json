@@ -13,7 +13,9 @@
     "extra": {
         "commands": [
             "woocart prefix-replace",
-            "woocart to-innodb"
+            "woocart to-innodb",
+            "wp woocart denylist",
+            "wp woocart allowlist"
         ]
     }
 }
