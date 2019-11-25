@@ -181,12 +181,12 @@ $run_denylist_command = function( $args, $assoc_args ) {
             $denylist[] = $plugin;
 
             update_option( 'woocart_denylist_plugins', $denylist );
-            WP_CLI::success( sprintf( '%s plugin added to the denylist.', $plugin ) );
+            \WP_CLI::success( sprintf( '%s plugin added to the denylist.', $plugin ) );
         } else {
-            WP_CLI::log( 'Plugin already exists in the denylist.' );
+            \WP_CLI::log( 'Plugin already exists in the denylist.' );
         }
     } else {
-        WP_CLI::error( 'No plugin specified.' );
+        \WP_CLI::error( 'No plugin specified.' );
     }
 };
 
@@ -214,12 +214,12 @@ $run_allowlist_command = function( $args, $assoc_args ) {
             $allowlist[] = $plugin;
 
             update_option( 'woocart_allowlist_plugins', $allowlist );
-            WP_CLI::success( sprintf( '%s plugin added to the allowlist.', $plugin ) );
+            \WP_CLI::success( sprintf( '%s plugin added to the allowlist.', $plugin ) );
         } else {
-            WP_CLI::log( 'Plugin already exists in the allowlist.' );
+            \WP_CLI::log( 'Plugin already exists in the allowlist.' );
         }
     } else {
-        WP_CLI::error( 'No plugin specified.' );
+        \WP_CLI::error( 'No plugin specified.' );
     }
 };
 
