@@ -3,7 +3,7 @@
 ## Using
 
 ~~~
-wp woocart prefix-replace new_prefix [--verbose]
+wp woocart prefix-replace old_prefix [--verbose]
 ~~~
 
 Replaces table names with new_prefix ones and updates **options** and **usermeta** tables.
