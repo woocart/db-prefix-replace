@@ -15,9 +15,13 @@ function rename_tables($old_prefix, $verbose)
     global $wpdb;
     $show_table_query = sprintf('SHOW TABLES LIKE "%s%%";', $wpdb->esc_like($old_prefix));
     $tables = $wpdb->get_results($show_table_query, ARRAY_N);
+
     if (!$tables) {
-        throw new \Exception('MySQL error: ' . $wpdb->last_error);
+        // Ask user if he wished to proceed with updating options and usermeta
+        \WP_CLI::confirm( 'No tables found with ' . $old_prefix . ' prefix. Would you like to continue updating options and usermeta tables?' );
+        return;
     }
+
     foreach ($tables as $table) {
         $table = substr($table[0], strlen($old_prefix));
         $query = sprintf("RENAME TABLE `%s` TO `%s`;", $old_prefix . $table, $wpdb->prefix . $table);
