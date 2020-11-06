@@ -45,8 +45,8 @@ function update_options_table($old_prefix, $verbose)
 {
     global $wpdb;
     $update_query = $wpdb->prepare("UPDATE `{$wpdb->prefix}options` SET option_name = %s WHERE option_name = %s LIMIT 1;",
-        $old_prefix . 'user_roles',
-        $wpdb->prefix . 'user_roles'
+        $wpdb->prefix . 'user_roles',
+        $old_prefix . 'user_roles'
     );
     if ($verbose) {
         \WP_CLI::line($update_query);
