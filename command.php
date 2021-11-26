@@ -135,7 +135,3 @@ function update_usermeta_table($old_prefix, $verbose)
     $verbose = \WP_CLI\Utils\get_flag_value($assoc_args, 'verbose');
     update_usermeta_table($old_prefix, $verbose);
 });
-
-
-
-
