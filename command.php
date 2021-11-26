@@ -101,9 +101,9 @@ function update_usermeta_table($old_prefix, $verbose)
         throw new \Exception('MySQL error: ' . $wpdb->last_error);
     }
     foreach ($rows as $row) {
-        $without_key_prefix = substr($row->meta_key, 0, strlen($old_prefix));
+        $without_key_prefix = substr($row->meta_key, strlen($old_prefix));
         $update_query = $wpdb->prepare("UPDATE `{$wpdb->prefix}usermeta` SET meta_key=%s WHERE meta_key=%s LIMIT 1;",
-        $wpdb->prefix . $without_key_prefix,
+            $wpdb->prefix . $without_key_prefix,
             $row->meta_key
         );
         if ($verbose) {
@@ -126,7 +126,7 @@ function update_usermeta_table($old_prefix, $verbose)
  * [--verbose]
  * : Show more information about the process on STDOUT.
  */
-\WP_CLI::add_command('woocart rename-user', function ($args, $assoc_args) {
+\WP_CLI::add_command('db rename-usermeta', function ($args, $assoc_args) {
     $old_prefix = array_shift($args);
     $defaults = array(
         'verbose' => true,
