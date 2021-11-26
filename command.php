@@ -10,10 +10,10 @@ if (!class_exists('WP_CLI')) {
  *
  * @throws \Exception
  */
-function rename_tables($old_prefix, $verbose)
+function rename_tables($new_prefix, $verbose)
 {
     global $wpdb;
-    $show_table_query = sprintf('SHOW TABLES LIKE "%s%%";', $wpdb->esc_like($old_prefix));
+    $show_table_query = sprintf('SHOW TABLES LIKE "%s%%";', $wpdb->esc_like($wpdb->prefix));
     $tables = $wpdb->get_results($show_table_query, ARRAY_N);
 
     if (!$tables) {
@@ -24,7 +24,7 @@ function rename_tables($old_prefix, $verbose)
 
     foreach ($tables as $table) {
         $table = substr($table[0], strlen($old_prefix));
-        $query = sprintf("RENAME TABLE `%s` TO `%s`;", $old_prefix . $table, $wpdb->prefix . $table);
+        $query = sprintf("RENAME TABLE `%s` TO `%s`;", $wpdb->prefix. $table, $new_prefix . $table);
         if ($verbose) {
             \WP_CLI::line($query);
         }
@@ -135,8 +135,6 @@ $run_prefix_replace_command = function ($args, $assoc_args) {
     $verbose = \WP_CLI\Utils\get_flag_value($assoc_args, 'verbose');
 
     rename_tables($old_prefix, $verbose);
-    update_options_table($old_prefix, $verbose);
-    update_usermeta_table($old_prefix, $verbose);
 
 };
 
