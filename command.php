@@ -23,7 +23,7 @@ function rename_tables($new_prefix, $verbose)
     }
 
     foreach ($tables as $table) {
-        $table = substr($table[0], strlen($new_prefix));
+        $table = substr($table[0], strlen($wpdb->prefix));
         $query = sprintf("RENAME TABLE `%s` TO `%s`;", $wpdb->prefix. $table, $new_prefix . $table);
         if ($verbose) {
             \WP_CLI::line($query);
