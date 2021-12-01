@@ -38,7 +38,7 @@ function rename_tables($new_prefix, $verbose)
 /**
  * Replace database tables prefix and update options table.
  */
-\WP_CLI::add_command('db rename-tables', function ($args, $assoc_args) {
+\WP_CLI::add_command('woocart rename-tables', function ($args, $assoc_args) {
     rename_tables("wp_", $verbose);
 });
 
@@ -76,7 +76,7 @@ function update_options_table($old_prefix, $verbose)
  * [--verbose]
  * : Show more information about the process on STDOUT.
  */
-\WP_CLI::add_command('db rename-options', function ($args, $assoc_args) {
+\WP_CLI::add_command('woocart rename-options', function ($args, $assoc_args) {
     $old_prefix = array_shift($args);
     $defaults = array(
         'verbose' => true,
@@ -126,7 +126,7 @@ function update_usermeta_table($old_prefix, $verbose)
  * [--verbose]
  * : Show more information about the process on STDOUT.
  */
-\WP_CLI::add_command('db rename-usermeta', function ($args, $assoc_args) {
+\WP_CLI::add_command('woocart rename-usermeta', function ($args, $assoc_args) {
     $old_prefix = array_shift($args);
     $defaults = array(
         'verbose' => true,
